@@ -1,4 +1,4 @@
-import React, { Component,} from 'react';
+import React from 'react';
 import {Home} from './pages/EndUser/Home.js'
 import {About} from './pages/EndUser/About.js'
 import {Contact} from './pages/EndUser/Contact.js'
@@ -8,7 +8,7 @@ import './App.css';
 import {  withAuthenticator } from 'aws-amplify-react';
 //import{ AmplifyAuthenticator} from '@aws-amplify/ui-react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Amplify, { API, Auth, graphqlOperation } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { Questions } from './pages/EndUser/Questions.js';
 import Header from './components/Header';
@@ -36,4 +36,4 @@ function App(){
     );
     }
 
-export default withAuthenticator(App,true);
+export default App;

@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Accordion, Button, Container, Card} from 'react-bootstrap';
 import QuestionsList from '../../testData/QuestionsList.json';
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import {listQuestionss} from '../../graphql/queries';
 import './questions.css'
 
 
@@ -13,22 +11,7 @@ function QAccordion(){
 
  const [questions, setQuestions] = useState([]);
 
-    useEffect(() => {//Every time the app renders it will fetch the questions
-    fetchquestions();
-    },[]/**create an empty array so that the useEffect only fetches the questions once each time the page renders*/)
-
-     const fetchquestions = async ( ) =>{
-       
-    try {
-      const questionData = await API.graphql(graphqlOperation(listQuestionss));//to get data from the graphQL database
-      const questionList = questionData.data.listQuestionss.items;
-      console.log('Questions list', questionList);//to display the list of questionst
-      setQuestions(questionList);
-    } catch (error) {
-       console.log("Error on fetching question",error);
-    }
-  };
-    const [showFollowupQs, setShowFollowupQs] = useState(false);
+   const [showFollowupQs, setShowFollowupQs] = useState(false);
     
     //Handle when the user clicks the submit button
     const handleSubmit = ()=>{
@@ -124,3 +107,20 @@ export default QAccordion;
     )
   })}
 </div> */}
+
+ //useEffect(() => {//Every time the app renders it will fetch the questions
+  //   fetchquestions();
+  //   },[]/**create an empty array so that the useEffect only fetches the questions once each time the page renders*/)
+
+  //    const fetchquestions = async ( ) =>{
+       
+  //   try {
+  //     const questionData = await API.graphql(graphqlOperation(listQuestionss));//to get data from the graphQL database
+  //     const questionList = questionData.data.listQuestionss.items;
+  //     console.log('Questions list', questionList);//to display the list of questionst
+  //     setQuestions(questionList);
+  //   } catch (error) {
+  //      console.log("Error on fetching question",error);
+  //   }
+  // };
+  //  
