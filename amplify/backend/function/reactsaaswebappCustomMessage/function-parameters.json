@@ -1,0 +1,26 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "reactsaaswebapp",
+  "functionName": "reactsaaswebappCustomMessage",
+  "resourceName": "reactsaaswebappCustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": [
+    {
+      "key": "RESOURCENAME",
+      "value": "resourceName"
+    }
+  ],
+  "triggerDir": "C:\\snapshot\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "reactsaaswebappCustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "http://localhost:3000/",
+  "EMAILSUBJECT": "Email Confirmation",
+  "EMAILMESSAGE": "Welcome to infoHorus, you email has been verified. click the following link to continue to the site",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}

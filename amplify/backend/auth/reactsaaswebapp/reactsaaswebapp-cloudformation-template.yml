@@ -9,6 +9,28 @@ Parameters:
     Type: String
 
   
+  
+  
+  functionreactsaaswebappCustomMessageArn:
+    Type: String
+    Default: functionreactsaaswebappCustomMessageArn
+  
+  functionreactsaaswebappCustomMessageName:
+    Type: String
+    Default: functionreactsaaswebappCustomMessageName
+  
+  
+  
+  functionreactsaaswebappPostAuthenticationArn:
+    Type: String
+    Default: functionreactsaaswebappPostAuthenticationArn
+  
+  functionreactsaaswebappPostAuthenticationName:
+    Type: String
+    Default: functionreactsaaswebappPostAuthenticationName
+  
+  
+  
 
     
   identityPoolName:
@@ -133,7 +155,6 @@ Parameters:
   adminQueries:
     Type: String
             
-            
   
   thirdPartyAuth:
     Type: String
@@ -150,6 +171,27 @@ Parameters:
   dependsOn:
     Type: CommaDelimitedList
       
+  triggers:
+    Type: String
+  
+            
+  
+  hostedUI:
+    Type: String
+            
+            
+  verificationBucketName:
+    Type: String
+  
+            
+      
+  parentStack:
+    Type: String
+        
+        
+  permissions:
+    Type: CommaDelimitedList
+      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -157,6 +199,27 @@ Conditions:
    
 
 Resources:
+  
+  CustomMessageConfirmationBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: "Retain"
+    Properties:
+      BucketName:  !If [ShouldNotCreateEnvResources, !Ref verificationBucketName, !Join ['',[!Ref verificationBucketName, '-', !Ref env]]]
+      AccessControl: "Private"
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+        ErrorDocument: "index.html"
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedHeaders:
+              - "Authorization"
+              - "Content-Length"
+            AllowedMethods:
+              - "GET"
+            AllowedOrigins:
+              - "*"
+            MaxAge: 3000
   
   
   # BEGIN SNS ROLE RESOURCE
@@ -225,9 +288,27 @@ Resources:
         
       
       
+      LambdaConfig:
+        
+        
+          CustomMessage: !Ref functionreactsaaswebappCustomMessageArn
+        
+        
+        
+          PostAuthentication: !Ref functionreactsaaswebappPostAuthenticationArn
+        
+        
+        
+        
+        
+        
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
+      
+      EmailVerificationMessage: !Ref emailVerificationMessage
+      EmailVerificationSubject: !Ref emailVerificationSubject
       
       Policies:
         PasswordPolicy:
@@ -245,6 +326,36 @@ Resources:
         SnsCallerArn: !GetAtt SNSRole.Arn
         ExternalId: reactscc783637_role_external_id
     
+  
+  
+  
+  UserPoolCustomMessageLambdaInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties:
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionreactsaaswebappCustomMessageName
+      SourceArn: !GetAtt UserPool.Arn
+  
+  
+  
+  UserPoolPostAuthenticationLambdaInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties:
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionreactsaaswebappPostAuthenticationName
+      SourceArn: !GetAtt UserPool.Arn
+  
+  
+  
+  
+  
+  
+  # Updating lambda role with permissions to Cognito
+  
   
   UserPoolClientWeb:
   # Created provide application access to user pool

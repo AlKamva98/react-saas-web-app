@@ -1,6 +1,7 @@
 import React from "react";
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Image,Container, Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
+import './jumbo.css'
 
 export function Jumbotron(){
 
@@ -16,7 +17,7 @@ export function Jumbotron(){
 </div>
   </Col>
   <Col className="mx-auto my-auto">
-  <img className="img-fluid" src="../images/vector.png" width="450" height="450"></img>
+  <Image className="img-fluid" src="./images/vector.png" width="450" height="450"/>
   </Col>
  </Row>
 </Container>

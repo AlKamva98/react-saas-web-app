@@ -5,7 +5,7 @@ import { Customer } from '../../components/index/customer.jsx';
 
 export function Home() {
   return (
-    <div className="Home">
+    <div className="Home align-items-center">
       <Jumbotron/>
       <Featurerette/>
       <Customer/>
