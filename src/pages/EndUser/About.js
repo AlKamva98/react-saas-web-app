@@ -12,7 +12,7 @@ export function About(){
   </div>
   <Row>
    <Col className="col-md-6 ">
-    <Image className="mx-auto" alt="about us image" src="../../images/vector.png"/>
+    <Image className="mx-auto" alt="about us image" src="../../images/vector.png" width="450" height="450"/>
    </Col>
    <Col className="col-md-6 px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h4 className="display-4">Our Story</h4>
@@ -26,7 +26,7 @@ export function About(){
     <p className="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum sit laudantium qui dignissimos porro id! Autem esse veniam quis. Eius excepturi facilis pariatur molestiae labore officia asperiores, sit fuga perspiciatis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum sit laudantium qui dignissimos porro id! Autem esse veniam quis. Eius excepturi facilis pariatur molestiae labore officia asperiores, sit fuga perspiciatis.</p>
    </Col>
    <Col className="col-md-4 ">
-    <Image className="mx-auto" alt="about us image" src="../../images/vector.png"/>
+    <Image className="mx-auto" alt="about us image" src="../../images/vector.png" width="450" height="450"/>
    </Col>
    
   </Row>

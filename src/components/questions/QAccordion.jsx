@@ -65,7 +65,7 @@ return<>
     </Accordion.Toggle>
     <Accordion.Collapse eventKey={index.toString()}>
     <Card.Body>
-      <Form onSubmit={this.handleSubmit}>
+      <Form >
       <div>
       <label className="label" id ="mainQ" key={index.toString()}>{questitem.mainquest}</label>
       </div><br/>
