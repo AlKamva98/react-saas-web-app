@@ -1,10 +1,10 @@
 {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "reactscc783637",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "reacts1f063f13",
     "userPoolName": "reactsaaswebapp",
     "autoVerifiedAttributes": [
-        "email"
+        "phone_number"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
@@ -23,18 +23,15 @@
         "Requires Uppercase"
     ],
     "requiredAttributes": [
-        "email",
-        "name",
-        "gender",
-        "phone_number"
+        "email"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "reactscc783637_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "reacts1f063f13_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "cc783637",
+    "sharedId": "1f063f13",
     "resourceName": "reactsaaswebapp",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
@@ -60,31 +57,5 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "reactsaaswebappCustomMessage",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        },
-        {
-            "category": "function",
-            "resourceName": "reactsaaswebappPostAuthentication",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        }
-    ],
-    "triggers": "{\n  \"CustomMessage\": [\n    \"verification-link\"\n  ],\n  \"PostAuthentication\": [\n    \"custom\"\n  ]\n}",
-    "hostedUI": false,
-    "verificationBucketName": "reactsaaswebappverificationbucket",
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "permissions": []
+    "dependsOn": []
 }

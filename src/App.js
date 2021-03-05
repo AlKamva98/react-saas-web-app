@@ -12,6 +12,7 @@ import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { Questions } from './pages/EndUser/Questions.js';
 import Header from './components/Header';
+import '@aws-amplify/ui/dist/style.css';
 Amplify.configure(aws_exports);
 
 
@@ -36,4 +37,6 @@ function App(){
     );
     }
 
-export default App;
+    Amplify.Logger.LOG_LEVEL = "DEBUG";
+
+export default withAuthenticator(App,true);

@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
-import {Accordion, Button, Container, Card} from 'react-bootstrap';
+import {Form, Accordion, Button, Container, Card} from 'react-bootstrap';
+import {API, graphqlOperations} from 'aws-amplify'
+import {graphqlMutations} from 'aws-appsync-react'
+import {graphql, compose} from 'react-apollo'
 import QuestionsList from '../../testData/QuestionsList.json';
 import './questions.css'
 
@@ -13,15 +16,21 @@ function QAccordion(){
 
    const [showFollowupQs, setShowFollowupQs] = useState(false);
     
-    //Handle when the user clicks the submit button
-    const handleSubmit = ()=>{
 
-    }
+
+    //Handle when the user clicks the submit button
+    // const handleSubmit = (form)=>{
+    //   let answer = form.ansb.toString();
+    //   alert(answer);
+    // }
 
     //handle when the user inputs data into the input fields
-    const handleInputChange = () => {
+    const handleAnsAChange = () => {
 
     }
+      const handleSubmit = (event)=>{
+      
+    } 
 
  return(
     <Accordion className="accordion" defaultActiveKey="0">
@@ -31,14 +40,16 @@ function QAccordion(){
       let ansB = "ansB"+ questitem.id.toString();
       let ansC = "ansC"+ questitem.id.toString();
 
+     
       let rdY = "rdY"+ questitem.id.toString();
       let rdN = "rdN"+ questitem.id.toString();
-
       
+
+    
 const FollowupQs = () =>{
           return(
       <div className="followupQs"> 
-      <label className="label" id ="labelquestA" key={index.toString()}>{questitem.questa}</label><br/>
+      <label className="label" id ="labelquestA"  key={index.toString() }> {questitem.questa}</label><br/>
       <input type="text" className="form-control" id={ansA} />    
       <label className="label" id ="labelquestB" key={index.toString()}>{questitem.questb}</label><br/>
       <input type="text" className="form-control" id={ansB} />    
@@ -54,6 +65,7 @@ return<>
     </Accordion.Toggle>
     <Accordion.Collapse eventKey={index.toString()}>
     <Card.Body>
+      <Form onSubmit={this.handleSubmit}>
       <div>
       <label className="label" id ="mainQ" key={index.toString()}>{questitem.mainquest}</label>
       </div><br/>
@@ -61,14 +73,15 @@ return<>
       <input className="rd" type="radio" value="Yes" name="Qmain" id={rdY} onClick={() => setShowFollowupQs(true)} /> Yes
       <input className="rd"  type="radio" value="No" name="Qmain" id={rdN} onClick={() => setShowFollowupQs(false)} /> No
       </div>
+      
       {
         showFollowupQs ? (<FollowupQs/>)
           :(null )
       }
         <Container className="btndiv">
         <Button className="btn " id="btnSend" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Send</Button> 
-        <Button type ="Submit" className="btn mx-5 align-text-right" id="btnSubmit" >Submit</Button></Container>
-
+        <Button type ="Submit" className="btn mx-5 align-text-right"  id="btnSubmit" >Submit</Button></Container>
+      </Form>
      </Card.Body>
     </Accordion.Collapse>
   </Card>
@@ -77,8 +90,6 @@ return<>
     </div>
 </Accordion>
   );
-  
-
 }
 
 export default QAccordion;
