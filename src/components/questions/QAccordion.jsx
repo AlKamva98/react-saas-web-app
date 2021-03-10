@@ -18,20 +18,7 @@ function QAccordion(){
     
 
 
-    //Handle when the user clicks the submit button
-    // const handleSubmit = (form)=>{
-    //   let answer = form.ansb.toString();
-    //   alert(answer);
-    // }
-
-    //handle when the user inputs data into the input fields
-    const handleAnsAChange = () => {
-
-    }
-      const handleSubmit = (event)=>{
-      
-    } 
-
+    
  return(
     <Accordion className="accordion" defaultActiveKey="0">
   <div>
@@ -78,9 +65,10 @@ return<>
         showFollowupQs ? (<FollowupQs/>)
           :(null )
       }
-        <Container className="btndiv">
-        <Button className="btn " id="btnSend" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Send</Button> 
-        <Button type ="Submit" className="btn mx-5 align-text-right"  id="btnSubmit" >Submit</Button></Container>
+        <Container className="btndiv d-flex justify-content-between"> 
+        <Button type ="submit" className=" bg-secondary"  name="prev" >Previous</Button>
+        <Button type ="submit" className=" bg-success "  name="btnSubmit" >Save & continue</Button>
+        </Container>
       </Form>
      </Card.Body>
     </Accordion.Collapse>
@@ -95,7 +83,7 @@ return<>
 export default QAccordion;
 
 
-
+ 
 {/*
    <div>
   {QuestionsList.map((questitem, index)=>{

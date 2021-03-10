@@ -1,6 +1,6 @@
 {
   "auth": {
-    "reactsaaswebapp": {
+    "reactsaaswebappa07d528e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],

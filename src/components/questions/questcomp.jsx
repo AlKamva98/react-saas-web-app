@@ -7,15 +7,12 @@ import './questions.css';
  return(
       <Container className =" overflow-hidden p-5  bg-light">
         <Col className="col-md-12">
-        <h3>Please fill in the following questionnaire</h3>
+        <h3>Please fill in the following questionnaire</h3> 
+      <ProgressBar animated variant="success" label="3/10" now={30} /><br/>
         </Col>
-        <Form method ="POST">
-        </Form>
         <QAccordion/>
-        <span className="fw-bold fs-5">Don't know the answers? Click the "Send" button to send email to some one who knows</span>
-      <div className="progress" >  
-      <ProgressBar className=" bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</ProgressBar>
-      </div>
+        <span className="fw-bold fs-2">Need to consult a colleague on this answer? Send an internal message directly to them for a quick response. <button type="button" className="btn btn-link">Consult a colleague</button></span>
+    
     </Container>
  )
 }

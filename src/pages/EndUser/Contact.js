@@ -1,5 +1,5 @@
 import React  from 'react';
-import {Card,Row,Col, Form, Button} from 'react-bootstrap'
+import {Card,Row,Col} from 'react-bootstrap'
 
 export function Contact(){
  return( <Row className="row-cols-1 row-cols-md-3 mb-3 text-center">

@@ -12,9 +12,6 @@
       "AmplifyAppId": "d3tqm2snr0swa8"
     },
     "categories": {
-      "auth": {
-        "reactsaaswebapp": {}
-      },
       "function": {
         "reactsaaswebappCustomMessage": {
           "REDIRECTURL": "http://localhost:3000/",
@@ -28,7 +25,22 @@
           "GROUP": "EndUsers",
           "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
           "s3Key": "amplify-builds/reactsaaswebappPostConfirmation-676f4f6d4f6c4d642f36-build.zip"
+        },
+        "reactsaaswebappa07d528eCustomMessage": {
+          "REDIRECTURL": "https://main.d3tqm2snr0swa8.amplifyapp.com/",
+          "EMAILSUBJECT": "Verify your email",
+          "EMAILMESSAGE": "Hi {username},{\\n} Welcome to infoHorus, thank you  for registering. To verify your email click the link below:",
+          "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
+          "s3Key": "amplify-builds/reactsaaswebappa07d528eCustomMessage-4947686f38525a33506b-build.zip"
+        },
+        "reactsaaswebappa07d528ePostConfirmation": {
+          "GROUP": "EndUsers",
+          "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
+          "s3Key": "amplify-builds/reactsaaswebappa07d528ePostConfirmation-4b393663437041693330-build.zip"
         }
+      },
+      "auth": {
+        "reactsaaswebappa07d528e": {}
       }
     }
   }

@@ -13,6 +13,7 @@ import aws_exports from './aws-exports';
 import { Questions } from './pages/EndUser/Questions.js';
 import Header from './components/Header';
 import '@aws-amplify/ui/dist/style.css';
+import Register from './components/Register/Register.js';
 Amplify.configure(aws_exports);
 
 
@@ -30,6 +31,7 @@ function App(){
         <Route path="/contact" components={Contact}/>
         <Route path="/payment"component={Payment}/>
         <Route path="/pricing"component={Pricing}/>
+        <Route path="/register"component={Register}/>
       </Switch>
       
       </div>
@@ -39,4 +41,4 @@ function App(){
 
     Amplify.Logger.LOG_LEVEL = "DEBUG";
 
-export default withAuthenticator(App,true);
+export default App;

@@ -1,4 +1,4 @@
-import React, { Component,} from 'react';
+import React from 'react';
 import { Container, Col,Row, Image } from 'react-bootstrap';
 
 
@@ -9,6 +9,7 @@ export function About(){
    <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 className="display-4">Our Mission</h1>
     <p className="lead">This is where we tell the users about our mission and then</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum sit laudantium qui dignissimos porro id! Autem esse veniam quis.</p>
   </div>
   <Row>
    <Col className="col-md-6 ">

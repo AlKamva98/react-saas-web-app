@@ -1,6 +1,7 @@
 import React from 'react';
 import {MenuItems} from './MenuItems'
 import {Link} from 'react-router-dom'
+import {Button} from 'react-bootstrap'
 import'./Header.css'
 
 class Header extends React.Component{
@@ -29,7 +30,7 @@ class Header extends React.Component{
           })}
         </ul>
         <div className="signin-icon">
-          <i className="fas fa-user-circle"></i>
+          <Link to="/register"><Button className="mx-4">Sign in</Button></Link>
         </div>
       </nav>
   )}
