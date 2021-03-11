@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import {Container, Row, Col,Card,Form} from 'react-bootstrap';
-import {Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import {AmplifyAuthenticator} from 'aws-amplify-react';
 import {Home} from '../../pages/EndUser/Home.js'
 import Auth from '@aws-amplify/auth';
@@ -12,7 +12,26 @@ const initialFormState = {
 fname:"", lname:"",email:"", password:"", confPassword:"", jobtitle:"", company:"",employees:"",formType:"signIn"
 };
 const [formState, updateFormState] = useState(initialFormState);
+const [user, updateUser] = useState(null);
+useEffect(()=>{
+    checkUser();
+},[])
 
+async function checkUser(){
+    try{
+        const user = await Auth.currentAuthenticatedUser();
+        console.log("The user is: "+user)
+        updateUser(user);
+        const a = await Auth.currentUserInfo();
+        console.log("User Info is:"+ a);     
+        updateFormState(()=>({...formState, formState: "signedIn"}));
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+let username;
 function onChange(e){
   e.persist()
   console.log("changing:"+e.target.name);
@@ -26,18 +45,20 @@ async function SignUp(){
         try{
         
         const {fname,lname, email, password, confPassword} = formState;
-        const username = fname+lname.charAt(0)+Math.round(Math.random()*1000);
+        username = fname+lname.charAt(0)+Math.round(Math.random()*1000);
         console.log("The username is: "+username);
         if(password === confPassword){
             await Auth.signUp({username, password,attributes: {
                 email
                 }})
+
+            
                 updateFormState(()=>({...formState, formType: "verifyMail"}))
                 console.log("SignUp complete")
             }else{
                 alert(username+"Passwords are different!! Pasword and Confirm Password must be simular");
             }      
-
+            
         
         
         }
@@ -56,7 +77,7 @@ async function verifyEmail(){
 async function SignIn(){
         const {email, password} = formState
         await Auth.signIn(email, password)
-        updateFormState(()=>({...formState, formType: "loggedIn"}))
+        updateFormState(()=>({...formState, formType: "signedIn"}))
         console.log("Logged in")
 
 }
@@ -198,12 +219,17 @@ async function SignIn(){
 )}
 { formType === 'verifyMail' && (
 <div><h1>Verify email address</h1>
-<span>Hi your username is </span><br/>
+<span>Hi your username is{username} </span><br/>
 <span>Check your email and click the link to verify your email.</span><br/>
 <span>Once your email is verified click continue to proceed to login.</span>
-<Link to="/"><p className="btn btn-primary pointer">continue</p></Link>
+<p  className="btn btn-primary pointer" onClick={verifyEmail}>continue</p>
 </div>
 )}
+{ formType === 'signedIn' && (
+   <Redirect to="/" />
+)
+
+}
 
 </div>
  )
