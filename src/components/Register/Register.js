@@ -32,6 +32,7 @@ async function checkUser(){
 
 
 let username;
+let usname;
 function onChange(e){
   e.persist()
   console.log("changing:"+e.target.name);
@@ -45,8 +46,9 @@ async function SignUp(){
         try{
         
         const {fname,lname, email, password, confPassword} = formState;
-        username = fname+lname.charAt(0)+Math.round(Math.random()*1000);
-        console.log("The username is: "+username);
+         usname = fname+lname.charAt(0)+Math.round(Math.random()*1000);
+        username = email;
+         // console.log("The username is: "+username);
         if(password === confPassword){
             await Auth.signUp({username, password,attributes: {
                 email
@@ -71,7 +73,7 @@ const signupScreen = ()=>{
      updateFormState(()=>({...formState, formType: "signUp"}))
 }
 async function verifyEmail(){
-
+updateFormState(()=>({...formState, formType: "signIn"}))
 }
 
 async function SignIn(){
@@ -222,7 +224,7 @@ async function SignIn(){
 <span>Hi your username is{username} </span><br/>
 <span>Check your email and click the link to verify your email.</span><br/>
 <span>Once your email is verified click continue to proceed to login.</span>
-<p  className="btn btn-primary pointer" onClick={verifyEmail}>continue</p>
+<p  className="btn btn-primary pointer" onClick={verifyEmail}>Login</p>
 </div>
 )}
 { formType === 'signedIn' && (

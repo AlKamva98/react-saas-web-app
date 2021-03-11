@@ -1,0 +1,18 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "reactsaaswebapp960ef599960ef599",
+  "functionName": "reactsaaswebapp960ef599960ef599PostConfirmation",
+  "resourceName": "reactsaaswebapp960ef599960ef599PostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "C:\\snapshot\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "reactsaaswebapp960ef599960ef599PostConfirmation",
+  "skipEdit": true,
+  "GROUP": "EndUsers",
+  "enableCors": false
+}

@@ -37,10 +37,16 @@
           "GROUP": "EndUsers",
           "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
           "s3Key": "amplify-builds/reactsaaswebappa07d528ePostConfirmation-4b393663437041693330-build.zip"
+        },
+        "reactsaaswebapp960ef599960ef599PostConfirmation": {
+          "GROUP": "EndUsers",
+          "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
+          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-7548716c504763384a5a-build.zip"
         }
       },
       "auth": {
-        "reactsaaswebappa07d528e": {}
+        "reactsaaswebapp960ef599960ef599": {},
+        "userPoolGroups": {}
       }
     }
   }
