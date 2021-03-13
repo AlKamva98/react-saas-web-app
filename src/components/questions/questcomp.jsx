@@ -1,5 +1,5 @@
 import React from 'react';
-import{Container, Col, Form, ProgressBar} from 'react-bootstrap'
+import{Container, Col, ProgressBar} from 'react-bootstrap'
 import QAccordion from './QAccordion'
 import './questions.css';
 

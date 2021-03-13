@@ -1,88 +1,133 @@
 import React,{useState, useEffect} from 'react';
 import {Container, Row, Col,Card,Form} from 'react-bootstrap';
-import {Redirect} from 'react-router-dom'
+import {Label, Input, FormGroup,Button, Modal, ModalBody,ModalFooter,ModalHeader} from 'reactstrap';
+import Select from 'react-select';
+import {Redirect} from 'react-router-dom';
 import {AmplifyAuthenticator} from 'aws-amplify-react';
-import {Home} from '../../pages/EndUser/Home.js'
+import {selectOptionsCountry, selectEmpOptions} from '../../testData/selectOptions.js'
+import { useForm, Controller } from "react-hook-form";
 import Auth from '@aws-amplify/auth';
 
 
 
-function Register() {
-const initialFormState = {
-fname:"", lname:"",email:"", password:"", confPassword:"", jobtitle:"", company:"",employees:"",formType:"signIn"
-};
-const [formState, updateFormState] = useState(initialFormState);
-const [user, updateUser] = useState(null);
-useEffect(()=>{
+function Register(props) {
+      const {
+    buttonLabel,
+    className
+  } = props;
+
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
+
+  const [modalPass, setModalPass] = useState(false);
+  const togglePass = () => setModalPass(!modalPass);
+
+    const initialFormState = {
+        fname:"", lname:"",email:"", password:"", confPassword:"", jobtitle:"", company:"",employees:"",formType:"signIn"
+    };
+    const [formState, updateFormState] = useState(initialFormState);
+    const [user, updateUser] = useState(null);
+    useEffect(()=>{
     checkUser();
-},[])
+    },[])
 
-async function checkUser(){
-    try{
-        const user = await Auth.currentAuthenticatedUser();
-        console.log("The user is: "+user)
-        updateUser(user);
-        const a = await Auth.currentUserInfo();
-        console.log("User Info is:"+ a);     
-        updateFormState(()=>({...formState, formState: "signedIn"}));
-    }catch(err){
-        console.log(err);
-    }
-}
+    const { register, handleSubmit, errors, control } = useForm();
+    const handleRegistration = (data) => console.log(data);
+    const handleError = (errors) => {};
+    const registerOptions = {
+        fname: { required: "First name is required" },
+        lname: { required: "Last name is required" },
+        email: { required: "Email is required" },
+        password: {
+            required: "Password is required",
+            minLength: {
+                value: 8,
+                message: "Password must have at least 8 characters containing atleast 1 uppercase, 1 lowercase, 1 number and 1 special character"
+      }
 
+    },
+    jobtitle:{ required: "Job Title is required"},
+    company:{ required: "Company name is required"},
+    employees: {required: "Number of employees is required"},
+    country: {required: "Country is required"}
+    };
+    
+   
+    const [handleButton, setHandleButton] = useState(true);
 
-let username;
-let usname;
-function onChange(e){
-  e.persist()
-  console.log("changing:"+e.target.name);
-  updateFormState(()=>({...formState, [e.target.name]: e.target.value}))
-}
-
-const {formType} = formState;
-
-async function SignUp(){
-     console.log("Signing up")
+    async function checkUser(){
         try{
+            const user = await Auth.currentAuthenticatedUser();
+            console.log("The user is: "+user)
+            updateUser(user);
+            const a = await Auth.currentUserInfo();
+            console.log("User Info is:"+ a);     
+            updateFormState(()=>({...formState, formState: "signedIn"}));
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+
+    let username;
+    let usname;
+    function onChange(e){
+        e.persist()
+        console.log("changing:"+e.target.name);
+        updateFormState(()=>({...formState, [e.target.name]: e.target.value}))
+    }
+
+    const {formType} = formState;
+
+
+/**SignUp Function */
+    async function SignUp(){
+         console.log("Signing up")
+         try{
         
-        const {fname,lname, email, password, confPassword} = formState;
-         usname = fname+lname.charAt(0)+Math.round(Math.random()*1000);
-        username = email;
-         // console.log("The username is: "+username);
-        if(password === confPassword){
-            await Auth.signUp({username, password,attributes: {
+             const {fname,lname, email, password, confPassword} = formState;
+            usname = fname+lname.charAt(0)+Math.round(Math.random()*1000);
+            username = email;
+            // console.log("The username is: "+username);
+            if(password === confPassword){
+                await Auth.signUp({username, password,attributes: {
                 email
                 }})
-
-            
                 updateFormState(()=>({...formState, formType: "verifyMail"}))
                 console.log("SignUp complete")
             }else{
-                alert(username+"Passwords are different!! Pasword and Confirm Password must be simular");
-            }      
-            
-        
-        
+                
+              togglePass();
+            }    
         }
         catch(err){
-            console.log("Error:"+err);
-            
+            console.log("Error:"+err);    
         }
-}
-const signupScreen = ()=>{
-     updateFormState(()=>({...formState, formType: "signUp"}))
-}
-async function verifyEmail(){
-updateFormState(()=>({...formState, formType: "signIn"}))
-}
+/**End of SignUp Function */}
 
-async function SignIn(){
+const signupScreen = ()=>{/**SignUp redirect */
+     updateFormState(()=>({...formState, formType: "signUp"}))
+}/**End ofSignUp redirect */
+
+
+async function verifyEmail(){/**Verify email Function */
+updateFormState(()=>({...formState, formType: "signIn"}))
+}/**Verify email Function */
+
+async function SignIn(){/**SignIn Function */
+    try{
         const {email, password} = formState
-        await Auth.signIn(email, password)
+        await Auth.signIn(email, password)   
+        const exists =  await Auth.Credentials.get();
         updateFormState(()=>({...formState, formType: "signedIn"}))
         console.log("Logged in")
+        }catch(err){
+            toggle();
+            console.log(err);
+            
+        }
 
-}
+}/**End of SignIn Function */
 
  return (<div>
      {formType === "signUp" && (
@@ -91,104 +136,86 @@ async function SignIn(){
         <Col className="text-secondary my-auto text-center">
             <h4>Register today</h4>
             <p>All seed for cattle good which. Stars us saying grass morning spirit seed one fourth very said you sixth spirit. Created days.</p>
-            <img className="img-fluid text-center" src="img/vector.png" width="500" height="400"/>
+            <img className="img-fluid text-center"  src="/vector.png" width="500" height="400"/>
             <p>Brought first let lesser appear that give two called forth fill. Firmament. Saying deep, abundantly blessed so. Itself said seed evening and air seed beast of fruitful, open.</p>
         </Col>
+        
+        
         <Col id="subDiv2">
             <Card className="bg-light shadow" >
                 <Card.Body>
         <img className="mb-4" src="assets/brand/bootstrap-logo.svg" alt="Our logo" width="72" height="57"/>
         <h4 className="mb-3 fw-normal text-center">Please Fill in your details to sign up</h4>
-      <Form className="row g-3 m-4 p-4"> 
-        <Col className="col-md-6">
-            <label for="fname" className="visually-hidden" >First name</label>
-            <input type="text" className="form-control" onChange={onChange} name="fname" placeholder="First Name" required autofocus/> 
-            <div className="valid-feedback">
-            </div>
-        </Col>
-        <Col className="col-md-6">
-            <label for="lname" className="visually-hidden">Last name</label>
-            <input type="text" className="form-control" onChange={onChange} name="lname" placeholder="Last Name" required/>
-            <div className="valid-feedback">
-            </div>
-        </Col>
-       <Col className="col-md-12">
-        <label for="jobtitle" className="visually-hidden">Job Title</label>
-        <input type="text" name="jobtitle" className="form-control"  onChange={onChange}  placeholder="Job Title" required/>
-       </Col>
-          <Col className="col-md-12">
-              <label for="email" className="visually-hidden">Email address</label>
-              <input type="email" name="email" className="form-control"  onChange={onChange}  placeholder="Email" required />
-          </Col>
-        <Col className="col-12">
-            <label for="password" className="visually-hidden">Password</label>
-            <input type="password" name="password" className="form-control" onChange={onChange}  placeholder="Password" required/>
-        </Col>
 
-        <Col className="col-12">
-            <label for="confPassword" className="visually-hidden">Confirm Password</label>
-            <input type="password" name="confPassword" className="form-control" onChange={onChange} placeholder="Confirm Password" required/>
-        </Col>
-          
-         <Col class="col-md-12">
-         <label for="company" className="visually-hidden">Company</label>
-         <input type="text" name="company" className="form-control" onChange={onChange} placeholder="Company" required/>
-         </Col>
-          <Col className="col-md-12">
-              <select className="form-select" name="employees" onChange={onChange} aria-label=".form-select-lg example">
-                  <option selected>Employees</option>
-                  <option value="1-10 employees">1-10 employees</option>
-                  <option value="11-20 employees">11-20 employees</option>
-                  <option value="21-99 employees">21-99 employees</option>
-                  <option value="100-199 employees">100-199 employees</option>
-                  <option value="200-499 employees">200-499 employees</option>
-              </select>
-          </Col>
-          <Col className="col-md-12">
-              <select className="form-select mb-3"  name="country"  onChange={onChange} aria-label=".form-select-lg example">
-                  <option defaultValue>Country</option>
-                  <option value="Aus">Australia</option>
-                  <option value="Bots">Botswana</option>
-                  <option value="Chi">China</option>
-                  <option value="Den">Denmark</option>
-                  <option value="Eng">England</option>
-                  <option value="Fra">France</option>
-                  <option value="Ger">Germany</option>
-                  <option value="Hait">Haiti</option>
-                  <option value="Ind">India</option>
-                  <option value="Jap">Japan</option>
-                  <option value="Ken">Kenya</option>
-                  <option value="Lib">Liberia</option>
-                  <option value="Mex">Mexico</option>
-                  <option value="Hol">Netherlands</option>
-                  <option value="Omn">Oman</option>
-                  <option value="Pak">Pakistan</option>
-                  <option value="Qat">Qatar</option>
-                  <option value="Rus">Russia</option>
-                  <option value="RSA">South Africa</option>
-                  <option value="Tun">Tunisia</option>
-                  <option value="Ugn">Uganda</option>
-                  <option value="Ven">Venenzuela</option>
-                  <option value="Wal">Wales</option>
-                  <option value="Yem">Yemen</option>
-                  <option value="Zim">Zimbabwe</option>
-                </select>
-          </Col>
-            <div className="checkbox mb-3">
-            <text>
-                <input type="checkbox" name="chkAgreement" onChange={onChange} value="i-agree"/>   I agree to the <a href="#" >Master Subscription Agreement.</a>
-            </text>
-             </div>
+      <Form className="row g-3 m-4 p-4" onSubmit={handleSubmit(handleRegistration, handleError)}> 
+        <FormGroup className="col-md-6">
+            <Label for="fname" className="visually-hidden" >First name</Label>
+            <Input type="text" ref={register(registerOptions.fname)} className="form-control" onChange={onChange} name="fname" placeholder="First Name" required autofocus/> 
+            <div className="valid-feedback">
+            </div>
+        </FormGroup>
+        <FormGroup className="col-md-6">
+            <Label for="lname" className="visually-hidden">Last name</Label>
+            <Input type="text" innerRef={register(registerOptions.lname)} className="form-control" onChange={onChange} name="lname" placeholder="Last Name" required/>
+            <div className="valid-feedback">
+            </div>
+        </FormGroup>
+       <FormGroup className="col-12">
+        <Label for="jobtitle" className="visually-hidden">Job Title</Label>
+        <Input type="text" innerRef={register(registerOptions.jobtitle)} name="jobtitle" className="form-control"  onChange={onChange}  placeholder="Job Title" required/>
+       </FormGroup>
+          <FormGroup className="col-md-12">
+              <Label for="email" className="visually-hidden">Email address</Label>
+              <Input type="email" name="email" innerRef={register(registerOptions.email)} className="form-control"  onChange={onChange}  placeholder="Email" required />
+          </FormGroup>
+        <FormGroup className="col-12">
+            <Label for="password" className="visually-hidden">Password</Label>
+            <Input type="password" name="password" innerRef={register(registerOptions.password)} className="form-control" onChange={onChange}  placeholder="Password" required/>
+        </FormGroup>
+
+        <FormGroup className="col-12">
+            <Label for="confPassword" className="visually-hidden">Confirm Password</Label>
+            <Input type="password" name="confPassword" innerRef={register(registerOptions.password)} className="form-control" onChange={onChange} placeholder="Confirm Password" required/>
+        </FormGroup>
+          <Modal isOpen={modalPass} toggle={togglePass} className={className}>
+        <ModalHeader toggle={togglePass}>Sign up Failed</ModalHeader>
+        <ModalBody>Passwords are different!! Pasword and Confirm Password must be the same
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={togglePass}>Retry</Button>{' '}
+        </ModalFooter>
+      </Modal>
+         <FormGroup className="col-12">
+         <Label for="company" className="visually-hidden">Company</Label>
+         <Input type="text" name="company" innerRef={register(registerOptions.company)} className="form-control" onChange={onChange} placeholder="Company" required/>
+         </FormGroup>
+          <FormGroup className="col-12">
+                  <Label for="employees" className="visually-hidden">Number of employees</Label>  
+                  <Controller name="employees" control={control} as={Select} onChange={onChange} options={selectEmpOptions} defaultValue="Employees" rules={registerOptions.employees}/>
+                    <small className="text-danger">{errors.employees && errors.employees.message}</small>
+              
+          </FormGroup>
+          <FormGroup className="col-12">
+              <Label for="country" className="visually-hidden">Country</Label>
+               <Controller name="country" control={control} as={Select} onChange={onChange} options={selectOptionsCountry} defaultValue="Country" rules={registerOptions.country}/>
+                    <small className="text-danger">{errors.country && errors.country.message}</small>
+          </FormGroup>
+            <FormGroup className="checkbox mb-3">
+            <span>
+                <input type="checkbox" name="chkAgreement" onChange={onChange} value="i-agree"/>I agree to the <p className="btn-link d-none d-md-inline-block pointer">Master Subscription Agreement.</p>
+            </span>
+             </FormGroup>
         <div className="checkbox mb-3 ">
-        <span  >By registering, you agree to the processing of your personal data by Bahati Tech as described in the </span><a href="">Privacy policy</a>
+        <span  >By registering, you agree to the processing of your personal data by Bahati Tech as described in the </span><p className="btn-link d-none d-md-inline-block pointer">Privacy policy</p>
     </div>
-        <p className="w-100 btn btn-lg btn-primary pointer" onClick={SignUp}   >REGISTER</p>
-        <div className="checkbox mb-3">
+        
+        <FormGroup className="checkbox mb-3">
         <span>
-            <input type="checkbox" value="comms"/>   Yes, I would like to receive marketing communications regarding Bahati Tech products, services, and events. I can unsubscribe at a later time.        </span>
-        </div>
-    
-        </Form></Card.Body>
+            <input type="checkbox" value="newsletter"/>   Yes, I would like to receive marketing communications regarding Bahati Tech products, services, and events. I can unsubscribe at a later time.</span>
+        <Button type="submit" className="w-100 mt-5 btn btn-lg btn-primary bg-success" onClick={SignUp}  >REGISTER</Button>
+        </FormGroup>
+        </Form>
+        </Card.Body>
             </Card>
     </Col>
     </Row>
@@ -210,9 +237,19 @@ async function SignIn(){
                   <input type="checkbox" onChange={onChange} value="remember-me"/> Remember me
                 </label>
               </div>
-              <button className="w-100 btn btn-lg btn-primary" onClick={SignIn} type="submit">Sign in</button>
-              <p className="mt-5 mb-3 text-muted">Don't have account? Click <p className="btn-link d-md-inline-block pointer" onClick={signupScreen}>here</p> to register.</p>
-              <p className="mt-5 mb-3 text-muted">&copy;2021</p>
+              <Button className="w-100 btn btn-lg btn-primary bg-success" onClick={SignIn} type="submit">Sign in</Button>
+              <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>Sign in Failed</ModalHeader>
+        <ModalBody>
+          You have filled in an incorrect email or password. Please retry with the correct details. If you dont have an account, create a new account.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Retry</Button>{' '}
+          <Button color="secondary" onClick={toggle}>Sign up</Button>
+        </ModalFooter>
+      </Modal>
+              <p className="mt-5 mb-3 text-muted">Don't have account? Click <p className="btn-link d-none d-md-inline-block pointer" onClick={signupScreen}>here</p> to register.</p>
+              <p className="mt-5 mb-3 text-muted text-center">&copy;2021</p>
 
       </Col>
     </Row>
@@ -220,12 +257,11 @@ async function SignIn(){
 
 )}
 { formType === 'verifyMail' && (
-<div><h1>Verify email address</h1>
-<span>Hi your username is{username} </span><br/>
+<Container className="mt-3 pt3 "><h1>Verify email address</h1>
 <span>Check your email and click the link to verify your email.</span><br/>
 <span>Once your email is verified click continue to proceed to login.</span>
 <p  className="btn btn-primary pointer" onClick={verifyEmail}>Login</p>
-</div>
+</Container>
 )}
 { formType === 'signedIn' && (
    <Redirect to="/" />
