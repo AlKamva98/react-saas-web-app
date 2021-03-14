@@ -6,8 +6,14 @@ import {Redirect} from 'react-router-dom';
 import {AmplifyAuthenticator} from 'aws-amplify-react';
 import {selectOptionsCountry, selectEmpOptions} from '../../testData/selectOptions.js'
 import { useForm, Controller } from "react-hook-form";
-import Auth from '@aws-amplify/auth';
+//import Auth from '@aws-amplify/auth';
+import { Amplify, API, Auth, Storage } from 'aws-amplify';
+const awsConfig = require('../../aws-exports').default;
 
+Amplify.register(API)
+Amplify.register(Storage)
+Amplify.register(Auth)
+Amplify.configure(awsConfig)
 
 
 function Register(props) {
