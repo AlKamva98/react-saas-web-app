@@ -156,7 +156,7 @@ async function SignIn(){/**SignIn Function */
       <Form className="row g-3 m-4 p-4" onSubmit={handleSubmit(handleRegistration, handleError)}> 
         <FormGroup className="col-md-6">
             <Label for="fname" className="visually-hidden" >First name</Label>
-            <Input type="text" ref={register(registerOptions.fname)} className="form-control" onChange={onChange} name="fname" placeholder="First Name" required autofocus/> 
+            <Input type="text" innerRef={register(registerOptions.fname)} className="form-control" onChange={onChange} name="fname" placeholder="First Name" required autofocus/> 
             <div className="valid-feedback">
             </div>
         </FormGroup>
