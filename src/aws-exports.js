@@ -9,10 +9,16 @@ const awsmobile = {
     "aws_user_pools_web_client_id": "ikkhb6k7m9ja7rrkciaaj9ff5",
     "oauth": {},
     "federationTarget": "COGNITO_USER_POOLS",
-    "aws_appsync_graphqlEndpoint": "https://ns4e2k4w7rbo3bn4j5cawydhfa.appsync-api.eu-west-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://f7fb42gdmvfopagti4rdj4fmtq.appsync-api.eu-west-1.amazonaws.com/graphql",
     "aws_appsync_region": "eu-west-1",
-    "aws_appsync_authenticationType": "API_KEY",
-    "aws_appsync_apiKey": "da2-qvsnvkv3pjc7pf5i3lhfum6nga"
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+    "aws_dynamodb_all_tables_region": "eu-west-1",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "question-staging",
+            "region": "eu-west-1"
+        }
+    ]
 };
 
 

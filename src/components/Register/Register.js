@@ -99,7 +99,7 @@ function Register(props) {
                 await Auth.signUp({username, password,attributes: {
                 email
                 }})
-                updateFormState(()=>({...formState, formType: "verifyMail"}))
+                /*updateFormState(()=>({...formState, formType: "verifyMail"}))*/
                 console.log("SignUp complete")
             }else{
                 
@@ -251,7 +251,7 @@ async function SignIn(){/**SignIn Function */
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>Retry</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Sign up</Button>
+          <Button color="secondary" onClick={signupScreen}>Sign up</Button>
         </ModalFooter>
       </Modal>
               <p className="mt-5 mb-3 text-muted">Don't have account? Click <p className="btn-link d-none d-md-inline-block pointer" onClick={signupScreen}>here</p> to register.</p>

@@ -1,0 +1,18 @@
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Assessor"] }
+      { allow: owner, ownerField: "username", operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  email: String!
+  fname: String!
+  lname: String!
+  jobtitle: String!
+  employees: String!
+  company: String!
+  country: String!
+}

@@ -41,7 +41,7 @@
         "reactsaaswebapp960ef599960ef599PostConfirmation": {
           "GROUP": "EndUsers",
           "deploymentBucketName": "amplify-amplify562ade32e9464-staging-112257-deployment",
-          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-7548716c504763384a5a-build.zip"
+          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-77562f325575692f3665-build.zip"
         }
       },
       "auth": {
