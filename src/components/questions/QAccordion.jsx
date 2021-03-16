@@ -12,11 +12,10 @@ function QAccordion(){
 
   // async arrow function to get questions from the DynamoDB 
 
- const [questions, setQuestions] = useState([]);
-
+ const [question, setQuestion] = useState([]);
+let [qNum, setQNum] = useState(0);
    const [showFollowupQs, setShowFollowupQs] = useState(false);
     
-
 
     
  return(
@@ -31,8 +30,22 @@ function QAccordion(){
       let rdY = "rdY"+ questitem.id.toString();
       let rdN = "rdN"+ questitem.id.toString();
       
+const setQuestion=()=>{
+  QuestionsList.slice(qNum, qNum+1);
+}
+    const nextClicked=()=>{
+      setQNum(qNum++);
+      setQuestion();
+      console.log("The quetion is:"+question);
+    }
+    const prevClicked=()=>{
+      if(qNum!==0){
+        setQNum(qNum--);
+        setQuestion();
+      console.log("The quetion is:"+question);
+      }
+    }
 
-    
 const FollowupQs = () =>{
           return(
       <div className="followupQs"> 
@@ -48,7 +61,7 @@ const FollowupQs = () =>{
 return<>
       <Card>
     <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-    {questitem.questionNum}
+    {questitem.questionNum} of {QuestionsList.length}
     </Accordion.Toggle>
     <Accordion.Collapse eventKey={index.toString()}>
     <Card.Body>
@@ -66,8 +79,8 @@ return<>
           :(null )
       }
         <Container className="btndiv d-flex justify-content-between"> 
-        <Button type ="submit" className=" bg-secondary"  name="prev" >Previous</Button>
-        <Button type ="submit" className=" bg-success "  name="btnSubmit" >Save & continue</Button>
+        <Button type ="button" className="btn btn-outline-secondary " onClick={prevClicked} name="prev" >Previous</Button>
+        <Button type ="button" className="btn btn-success " onClick={nextClicked}  name="btnSubmit" >Save & continue</Button>
         </Container>
       </Form>
      </Card.Body>

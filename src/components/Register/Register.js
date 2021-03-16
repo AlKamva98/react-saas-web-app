@@ -218,7 +218,7 @@ async function SignIn(){/**SignIn Function */
         <FormGroup className="checkbox mb-3">
         <span>
             <input type="checkbox" value="newsletter"/>   Yes, I would like to receive marketing communications regarding Bahati Tech products, services, and events. I can unsubscribe at a later time.</span>
-        <Button type="submit" className="w-100 mt-5 btn btn-lg btn-primary bg-success" onClick={SignUp}  >REGISTER</Button>
+        <Button type="submit" className="w-100 mt-5 btn btn-lg btn-success" onClick={SignUp}  >REGISTER</Button>
         </FormGroup>
         </Form>
         </Card.Body>
@@ -243,7 +243,7 @@ async function SignIn(){/**SignIn Function */
                   <input type="checkbox" onChange={onChange} value="remember-me"/> Remember me
                 </label>
               </div>
-              <Button className="w-100 btn btn-lg btn-primary bg-success" onClick={SignIn} type="submit">Sign in</Button>
+              <Button className="w-100 btn btn-lg btn-success" onClick={SignIn} type="submit">Sign in</Button>
               <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Sign in Failed</ModalHeader>
         <ModalBody>
