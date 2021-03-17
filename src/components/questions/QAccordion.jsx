@@ -12,7 +12,7 @@ function QAccordion(){
 
   // async arrow function to get questions from the DynamoDB 
 
- const [question, setQuestion] = useState([]);
+ let [question, setQuestion] = useState([]);
 let [qNum, setQNum] = useState(0);
    const [showFollowupQs, setShowFollowupQs] = useState(false);
     
@@ -31,18 +31,18 @@ let [qNum, setQNum] = useState(0);
       let rdN = "rdN"+ questitem.id.toString();
       
 const setQuestion=()=>{
-  QuestionsList.slice(qNum, qNum+1);
+  question = QuestionsList.slice(qNum, qNum+1).toString();
 }
     const nextClicked=()=>{
       setQNum(qNum++);
       setQuestion();
-      console.log("The quetion is:"+question);
+      console.log("The question is:"+JSON.stringify(question));
     }
     const prevClicked=()=>{
       if(qNum!==0){
         setQNum(qNum--);
         setQuestion();
-      console.log("The quetion is:"+question);
+      console.log("The question is:"+question);
       }
     }
 
@@ -67,11 +67,11 @@ return<>
     <Card.Body>
       <Form >
       <div>
-      <label className="label" id ="mainQ" key={index.toString()}>{questitem.mainquest}</label>
+      <label className="label" name="mainQ" key={index.toString()}>{questitem.mainquest}</label>
       </div><br/>
       <div className="radio">
-      <input className="rd" type="radio" value="Yes" name="Qmain" id={rdY} onClick={() => setShowFollowupQs(true)} /> Yes
-      <input className="rd"  type="radio" value="No" name="Qmain" id={rdN} onClick={() => setShowFollowupQs(false)} /> No
+      <input className="rd" type="radio" value="Yes" name={"Qmain"+index.toString} onClick={() => setShowFollowupQs(true)} /> Yes
+      <input className="rd"  type="radio" value="No" name={"Qmain"+index.toString} onClick={() => setShowFollowupQs(false)} /> No
       </div>
       
       {

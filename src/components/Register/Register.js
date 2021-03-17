@@ -99,7 +99,7 @@ function Register(props) {
                 await Auth.signUp({username, password,attributes: {
                 email
                 }})
-                /*updateFormState(()=>({...formState, formType: "verifyMail"}))*/
+                updateFormState(()=>({...formState, formType: "verifyMail"}))
                 console.log("SignUp complete")
             }else{
                 
