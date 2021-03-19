@@ -1,44 +1,42 @@
 import React,{useState,useEffect} from 'react';
 import {MenuItems} from './MenuItems'
 import {Link} from 'react-router-dom'
-import {Button} from 'react-bootstrap'
+import {Button,Image} from 'react-bootstrap'
 import'./Header.css'
 import Auth from '@aws-amplify/auth';
 
-function Header(){
-    let state = { clicked: false};
+function Header (){
+    const [clicked,setClicked] =  useState(false);
+    const [signedIn, setSignedIn]= useState(false);
 
-    const handleClick = () =>{
-      this.setState({clicked: !this.state.clicked})
+   const handleClick = () =>{
+      setClicked(!clicked)
     }
-
-  
-    const [signedIn, setSignedIn] = useState(false);
-
-
-function UseEffectFunction(){
-useEffect(()=>{
+ useEffect(()=>{
     checkUserSignedIn();
     },[])
-}
+
 async function checkUserSignedIn(){
  const user = await Auth.currentAuthenticatedUser();
   if(user !== undefined){
     setSignedIn(true);
   }
 }
+   const signOut=async()=>{
+      console.log("Signing out");
+      await Auth.signOut();
+      console.log("Signed out");
+    }
 
-async function signOut(){
-  await Auth.signOut();
-}
-
+  
+ 
   return (
       <nav className="NavbarItems">
-        <h1 className="navbar-logo"><i className="fas fa-shield-alt"></i>infoHorus</h1>
+        <Image className="img-fluid" src="./images/logo.png" alt="logo"  width="450" height="250"/>
         <div className="menu-icon" onClick={handleClick}> 
-          <i className={state.clicked ? 'fas fa-times': 'fas fa-bars'}></i>
+          <i className={clicked ? 'fas fa-times': 'fas fa-bars'}></i>
         </div>
-        <ul className ={state.clicked ? 'nav-menu active' : 'nav-menu'}>
+        <ul className ={clicked ? 'nav-menu active' : 'nav-menu'}>
           {MenuItems.map((item,index)=>{
             return(
               <li key={index}>
@@ -50,9 +48,7 @@ async function signOut(){
           })}
         </ul>
         <div className="signin-icon">
-         {signedIn? (<Button className="mx-4" onClick={signOut}>Sign Out</Button>):
-         (<Link to="/register"><Button className="mx-4">Sign in</Button></Link>)
-  }
+          {signedIn ? (<Link to="/"><Button className="mx-4" onClick={signOut}>Sign Out</Button></Link>):(<Link to="/register"><Button className="mx-4">Sign in</Button></Link>)}
         </div>
       </nav>
   )}

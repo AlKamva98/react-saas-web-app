@@ -16,3 +16,4 @@ type User
   company: String!
   country: String!
 }
+ 

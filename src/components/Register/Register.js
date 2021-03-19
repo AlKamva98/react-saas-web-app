@@ -4,7 +4,7 @@ import {Label, Input, FormGroup,Button, Modal, ModalBody,ModalFooter,ModalHeader
 import Select from 'react-select';
 import {Redirect} from 'react-router-dom';
 import {AmplifyAuthenticator} from 'aws-amplify-react';
-import {selectOptionsCountry, selectEmpOptions} from '../../testData/selectOptions.js'
+import {selectOptionsCountry, selectEmpOptions, selectOptionsIndustry} from '../../testData/selectOptions.js'
 import { useForm, Controller } from "react-hook-form";
 //import Auth from '@aws-amplify/auth';
 import { Amplify, API, Auth, Storage } from 'aws-amplify';
@@ -29,7 +29,7 @@ function Register(props) {
   const togglePass = () => setModalPass(!modalPass);
 
     const initialFormState = {
-        fname:"", lname:"",email:"", password:"", confPassword:"", jobtitle:"", company:"",employees:"",formType:"signIn"
+        fname:"", lname:"",email:"", password:"", confPassword:"", jobtitle:"", company:"",employees:"",authCode:"",formType:"signIn"
     };
     const [formState, updateFormState] = useState(initialFormState);
     const [user, updateUser] = useState(null);
@@ -38,7 +38,7 @@ function Register(props) {
     },[])
 
     const { register, handleSubmit, errors, control } = useForm();
-    const handleRegistration = (data) => console.log(data);
+    const handleRegistration = (data) => console.log("This is the users data:"+data);
     const handleError = (errors) => {};
     const registerOptions = {
         fname: { required: "First name is required" },
@@ -59,8 +59,6 @@ function Register(props) {
     };
     
    
-    const [handleButton, setHandleButton] = useState(true);
-
     async function checkUser(){
         try{
             const user = await Auth.currentAuthenticatedUser();
@@ -117,6 +115,10 @@ const signupScreen = ()=>{/**SignUp redirect */
 
 
 async function verifyEmail(){/**Verify email Function */
+  const {email, authCode} = formState;
+  username = email;
+await Auth.confirmSignUp(username,authCode);
+console.log("The username is: "+username+" and the authcode is "+authCode)
 updateFormState(()=>({...formState, formType: "signIn"}))
 }/**Verify email Function */
 
@@ -202,6 +204,11 @@ async function SignIn(){/**SignIn Function */
               
           </FormGroup>
           <FormGroup className="col-12">
+              <Label for="industry" className="visually-hidden">Industry</Label>
+               <Controller name="industry" control={control} as={Select} onChange={onChange} options={selectOptionsIndustry} defaultValue="industry" rules={registerOptions.industry}/>
+                    <small className="text-danger">{errors.industry && errors.industry.message}</small>
+          </FormGroup>
+          <FormGroup className="col-12">
               <Label for="country" className="visually-hidden">Country</Label>
                <Controller name="country" control={control} as={Select} onChange={onChange} options={selectOptionsCountry} defaultValue="Country" rules={registerOptions.country}/>
                     <small className="text-danger">{errors.country && errors.country.message}</small>
@@ -232,8 +239,7 @@ async function SignIn(){/**SignIn Function */
 <Container className="container my-auto mx-auto ">
     <Row>
       <Col className="col-md-4 mx-auto">
-              <img className="mb-4 text-center" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"/>
-              <h1 className="text-center h3 mb-3 fw-normal">Please sign in</h1>
+              <h1 className="text-center lead h3 mb-3 mt-5 fw-normal">Please sign in</h1>
               <label for="email" className="visually-hidden">Email address</label>
               <input type="email" name="email" className="form-control" onChange={onChange} placeholder="Email address" required autoFocus/>
               <label for="password" className="visually-hidden">Password</label>
@@ -266,7 +272,11 @@ async function SignIn(){/**SignIn Function */
 <Container className="mt-3 pt3 "><h1>Verify email address</h1>
 <span>Check your email and click the link to verify your email.</span><br/>
 <span>Once your email is verified click continue to proceed to login.</span>
-<p  className="btn btn-primary pointer" onClick={verifyEmail}>Login</p>
+<FormGroup className="col-12">
+         <Label for="authCode" className="visually-hidden">Company</Label>
+         <Input type="text" name="authCode" innerRef={register(registerOptions.authCode)} className="form-control" onChange={onChange} placeholder="Enter Code" required/>
+         </FormGroup>
+<Button  className="btn btn-primary pointer" onClick={verifyEmail}>Verify</Button>
 </Container>
 )}
 { formType === 'signedIn' && (

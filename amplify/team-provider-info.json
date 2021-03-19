@@ -1,4 +1,29 @@
 {
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactsaaswebapp-dev-133702-authRole",
+      "UnauthRoleArn": "arn:aws:iam::957365067607:role/amplify-reactsaaswebapp-dev-133702-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::957365067607:role/amplify-reactsaaswebapp-dev-133702-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-reactsaaswebapp-dev-133702-deployment",
+      "UnauthRoleName": "amplify-reactsaaswebapp-dev-133702-unauthRole",
+      "StackName": "amplify-reactsaaswebapp-dev-133702",
+      "StackId": "arn:aws:cloudformation:eu-west-1:957365067607:stack/amplify-reactsaaswebapp-dev-133702/86a57850-8593-11eb-98bd-02daab4c3e25",
+      "AmplifyAppId": "d3beyxst242h84"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "reactsaaswebapp960ef599960ef599": {}
+      },
+      "function": {
+        "reactsaaswebapp960ef599960ef599PostConfirmation": {
+          "deploymentBucketName": "amplify-reactsaaswebapp-dev-133702-deployment",
+          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-494c714551756e455a45-build.zip"
+        }
+      }
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplify562ade32e9464-staging-112257-authRole",
@@ -9,7 +34,7 @@
       "UnauthRoleName": "amplify-amplify562ade32e9464-staging-112257-unauthRole",
       "StackName": "amplify-amplify562ade32e9464-staging-112257",
       "StackId": "arn:aws:cloudformation:eu-west-1:277653301008:stack/amplify-amplify562ade32e9464-staging-112257/a47915c0-7b49-11eb-861d-0688c03830a1",
-      "AmplifyAppId": "d3tqm2snr0swa8"
+      "AmplifyAppId": "d3beyxst242h84"
     },
     "categories": {
       "function": {

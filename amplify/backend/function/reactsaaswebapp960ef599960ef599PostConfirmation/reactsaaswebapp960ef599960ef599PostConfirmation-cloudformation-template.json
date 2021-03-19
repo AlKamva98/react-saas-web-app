@@ -43,6 +43,18 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "apiinfohorusapiGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiinfohorusapiGraphQLAPIIdOutput"
+    },
+    "apiinfohorusapiGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apiinfohorusapiGraphQLAPIEndpointOutput"
+    },
+    "functionreactsaaswebapp960ef599960ef599PostConfirmationName": {
+      "Type": "String",
+      "Default": "functionreactsaaswebapp960ef599960ef599PostConfirmationName"
     }
   },
   "Conditions": {
@@ -95,6 +107,41 @@
             },
             "GROUP": {
               "Ref": "GROUP"
+            },
+            "API_INFOHORUSAPI_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apiinfohorusapiGraphQLAPIIdOutput"
+            },
+            "API_INFOHORUSAPI_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apiinfohorusapiGraphQLAPIEndpointOutput"
+            },
+            "FUNCTION_REACTSAASWEBAPP960EF599960EF599POSTCONFIRMATION_NAME": {
+              "Ref": "functionreactsaaswebapp960ef599960ef599PostConfirmationName"
+            },
+            "API_INFOHORUSAPI_USERTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiinfohorusapiGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+              }
+            },
+            "API_INFOHORUSAPI_USERTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiinfohorusapiGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                    }
+                  }
+                ]
+              ]
             }
           }
         },
@@ -193,6 +240,138 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "appsync:GraphQL"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apiinfohorusapiGraphQLAPIIdOutput"
+                      },
+                      "/types/Mutation/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "lambda:Create*",
+                "lambda:Put*",
+                "lambda:Add*",
+                "lambda:Update*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:lambda:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":function:",
+                      {
+                        "Ref": "functionreactsaaswebapp960ef599960ef599PostConfirmationName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiinfohorusapiGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiinfohorusapiGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

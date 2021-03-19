@@ -42,10 +42,14 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authreactsaaswebapp960ef599960ef599"
+              "userPoolId": "authreactsaaswebapp960ef599_userpool_960ef599"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }
@@ -54,13 +58,9 @@
     "reactsaaswebapp960ef599960ef599PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      "service": "Lambda",
+      "dependsOn": []
     }
   },
-  "storage": {
-    "dynamo6c585c2f": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    }
-  }
+  "storage": {}
 }

@@ -3,22 +3,15 @@
 
 const awsmobile = {
     "aws_project_region": "eu-west-1",
-    "aws_cognito_identity_pool_id": "eu-west-1:b0a387c9-caeb-4656-90bc-5fa30f01d2d6",
+    "aws_cognito_identity_pool_id": "eu-west-1:81e1330f-7512-4670-bbf2-f4fd5786ceb2",
     "aws_cognito_region": "eu-west-1",
-    "aws_user_pools_id": "eu-west-1_igc8rFGNy",
-    "aws_user_pools_web_client_id": "ikkhb6k7m9ja7rrkciaaj9ff5",
+    "aws_user_pools_id": "eu-west-1_vcEBgStXP",
+    "aws_user_pools_web_client_id": "391vp5r7qevjremh583aena025",
     "oauth": {},
     "federationTarget": "COGNITO_USER_POOLS",
-    "aws_appsync_graphqlEndpoint": "https://f7fb42gdmvfopagti4rdj4fmtq.appsync-api.eu-west-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://xrys5agrdfcwdkmoesrxkgq4pe.appsync-api.eu-west-1.amazonaws.com/graphql",
     "aws_appsync_region": "eu-west-1",
-    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_dynamodb_all_tables_region": "eu-west-1",
-    "aws_dynamodb_table_schemas": [
-        {
-            "tableName": "question-staging",
-            "region": "eu-west-1"
-        }
-    ]
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
 };
 
 

@@ -21,7 +21,7 @@ if(event.request.userAttributes.sub){
       'createdAt':{S: date.toISOString()},
       'updatedAt':{S: date.toISOString()}
     },
-    TableName: process.env.USERTABLE
+    TableName: 'user'
   }
   try{
     await ddb.putItem(params).promise()
