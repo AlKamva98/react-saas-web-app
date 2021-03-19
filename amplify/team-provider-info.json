@@ -19,7 +19,7 @@
       "function": {
         "reactsaaswebapp960ef599960ef599PostConfirmation": {
           "deploymentBucketName": "amplify-reactsaaswebapp-dev-133702-deployment",
-          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-494c714551756e455a45-build.zip"
+          "s3Key": "amplify-builds/reactsaaswebapp960ef599960ef599PostConfirmation-63322f39552f54563835-build.zip"
         }
       }
     }
